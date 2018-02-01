@@ -1,0 +1,86 @@
+package me.zoid.plugin;
+
+import java.util.Collection;
+
+import org.bukkit.Bukkit;
+import org.bukkit.craftbukkit.v1_11_R1.entity.CraftPlayer;
+import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.scoreboard.DisplaySlot;
+import org.bukkit.scoreboard.Objective;
+import org.bukkit.scoreboard.Score;
+import org.bukkit.scoreboard.Scoreboard;
+import org.bukkit.scoreboard.ScoreboardManager;
+
+import net.md_5.bungee.api.ChatColor;
+
+public class ScoreBoard implements Listener {
+
+	@EventHandler
+	public void onJoin(PlayerJoinEvent e) {
+		Player player = e.getPlayer();
+		ScoreboardManager sm = Bukkit.getScoreboardManager();
+		Scoreboard board = sm.getNewScoreboard();
+		
+		Objective o = board.registerNewObjective(ChatColor.BOLD + "" + ChatColor.DARK_PURPLE + "ZoidMC", "");
+		o.setDisplaySlot(DisplaySlot.SIDEBAR);
+		o.setDisplayName(ChatColor.DARK_GRAY + "" + ChatColor.BOLD + "ZoidMC        ");
+		
+		//scores player name (pn) to scoreboard board
+		Score info = o.getScore(ChatColor.GRAY + "Information");
+		info.setScore(13);
+		if(player.getName().length() < 10) {
+		Score playername = o.getScore(ChatColor.GRAY +    "Name:  " + ChatColor.DARK_PURPLE + player.getName());
+		playername.setScore(12);
+		} else {
+			Score playername = null;
+		}
+	
+		
+		
+		//add your rank here
+		Score playerRank = o.getScore(ChatColor.GRAY + "Rank:" + ChatColor.DARK_PURPLE + " rank");
+		playerRank.setScore(11);
+		//add your money here
+		Score playerMoney = o.getScore(ChatColor.GRAY + "Money: " + ChatColor.GOLD + "9000" );
+		playerMoney.setScore(10);
+		
+		
+		//Server
+		Score server = o.getScore(ChatColor.GRAY + "Server");
+		server.setScore(9);
+		
+		
+		 int playerCount = Bukkit.getServer().getOnlinePlayers().size();
+		Score playerCount2 = o.getScore(ChatColor.GRAY + "Online: " + ChatColor.DARK_PURPLE + playerCount);
+		playerCount2.setScore(8);
+		/*&8 = Darkgray
+
+				&5 = purple
+
+				&7 = gray(edited)
+		
+		
+		
+		
+		*/
+		int ping = ((CraftPlayer)player).getHandle().ping; 
+		
+		Score playerping = o.getScore(ChatColor.DARK_PURPLE + "Ping: " + ping);
+		playerping.setScore(7);
+		Score website = o.getScore(ChatColor.DARK_PURPLE + "www.zoidmc");
+		website.setScore(6);
+		
+		player.setScoreboard(board);
+	
+	
+	}
+	
+	
+	
+	
+	
+	
+}
